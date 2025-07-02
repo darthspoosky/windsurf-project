@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, Card, Button, TextInput, useTheme, ActivityIndicator } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import Card from '../../components/ui/Card';
 import { authService } from '../../services/auth/AuthService';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 
@@ -52,75 +51,82 @@ const RegisterScreen = () => {
     }
   };
 
+  const theme = useTheme();
+
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <ScrollView contentContainerClassName="flex-grow">
-        <View className="flex-1 justify-center p-6">
-          <View className="mb-8 items-center">
-            <Text className="text-3xl font-bold text-gray-800 mb-2">HomeSync India</Text>
-            <Text className="text-gray-600 text-center">Create your account</Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.content}>
+          <View style={styles.header}>
+            <Text variant="headlineMedium" style={styles.title}>HomeSync India</Text>
+            <Text variant="bodyMedium" style={styles.subtitle}>Create your account</Text>
           </View>
           
-          <Card className="mb-6">
-            {error && (
-              <View className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                <Text className="text-red-600">{error}</Text>
-              </View>
-            )}
-            
-            <Input
-              label="Full Name"
-              placeholder="Enter your full name"
-              autoCapitalize="words"
-              value={name}
-              onChangeText={setName}
-              className="mb-4"
-            />
-            
-            <Input
-              label="Email"
-              placeholder="Enter your email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              value={email}
-              onChangeText={setEmail}
-              className="mb-4"
-            />
-            
-            <Input
-              label="Password"
-              placeholder="Create a password"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
-              className="mb-4"
-            />
-            
-            <Input
-              label="Confirm Password"
-              placeholder="Confirm your password"
-              secureTextEntry
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              className="mb-6"
-            />
-            
-            <Button
-              variant="primary"
-              size="lg"
-              onPress={handleRegister}
-              loading={loading}
-              disabled={loading}
-              className="w-full mb-4"
-            >
-              Create Account
-            </Button>
+          <Card style={styles.card}>
+            <Card.Content>
+              {error && (
+                <View style={styles.errorContainer}>
+                  <Text style={{ color: theme.colors.error }}>{error}</Text>
+                </View>
+              )}
+              
+              <TextInput
+                label="Full Name"
+                placeholder="Enter your full name"
+                autoCapitalize="words"
+                value={name}
+                onChangeText={setName}
+                mode="outlined"
+                style={styles.input}
+              />
+              
+              <TextInput
+                label="Email"
+                placeholder="Enter your email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={email}
+                onChangeText={setEmail}
+                mode="outlined"
+                style={styles.input}
+              />
+              
+              <TextInput
+                label="Password"
+                placeholder="Create a password"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+                mode="outlined"
+                style={styles.input}
+              />
+              
+              <TextInput
+                label="Confirm Password"
+                placeholder="Confirm your password"
+                secureTextEntry
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                mode="outlined"
+                style={styles.input}
+              />
+              
+              <Button
+                mode="contained"
+                onPress={handleRegister}
+                disabled={loading}
+                style={styles.registerButton}
+                labelStyle={styles.buttonText}
+              >
+                {loading ? <ActivityIndicator color="white" /> : 'Create Account'}
+              </Button>
+            </Card.Content>
           </Card>
           
-          <View className="flex-row justify-center">
-            <Text className="text-gray-600">Already have an account? </Text>
+          <View style={styles.footer}>
+            <Text variant="bodyMedium" style={styles.footerText}>Already have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text className="text-primary font-medium">Sign In</Text>
+              <Text style={{ color: theme.colors.primary, fontWeight: 'bold' }}>Sign In</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -128,5 +134,63 @@ const RegisterScreen = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  title: {
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  subtitle: {
+    color: '#666',
+    textAlign: 'center',
+  },
+  card: {
+    marginBottom: 24,
+    elevation: 4,
+  },
+  errorContainer: {
+    marginBottom: 16,
+    padding: 12,
+    backgroundColor: '#FFEBEE',
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#FFCDD2',
+  },
+  input: {
+    marginBottom: 16,
+  },
+  registerButton: {
+    marginVertical: 8,
+    paddingVertical: 6,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  footerText: {
+    color: '#666',
+  },
+});
 
 export default RegisterScreen;

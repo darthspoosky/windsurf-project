@@ -132,11 +132,10 @@ const BillsScreen = createPlaceholderScreen('Bills');
 const GroceryScreen = createPlaceholderScreen('Grocery');
 const CalendarScreen = createPlaceholderScreen('Calendar');
 const VehicleScreen = createPlaceholderScreen('Vehicle');
-const FinanceOverviewScreen = createPlaceholderScreen('Finance Overview');
-const FamilyListScreen = createPlaceholderScreen('Family List');
-const DocumentListScreen = createPlaceholderScreen('Document List');
+const FinanceOverviewScreen = createPlaceholderScreen('Finance');
+const FamilyListScreen = createPlaceholderScreen('Family');
+const DocumentListScreen = createPlaceholderScreen('Documents');
 const AnalyticsScreen = createPlaceholderScreen('Analytics');
-const RegisterScreen = createPlaceholderScreen('Register');
 const ForgotPasswordScreen = createPlaceholderScreen('Forgot Password');
 const SettingsScreen = createPlaceholderScreen('Settings');
 

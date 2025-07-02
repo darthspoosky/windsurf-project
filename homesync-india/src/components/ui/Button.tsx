@@ -4,7 +4,7 @@ import { Button as PaperButton, Text, useTheme } from 'react-native-paper';
 
 interface ButtonProps {
   onPress?: () => void;
-  variant?: 'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
+  variant?: 'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'destructive';
   size?: 'sm' | 'md' | 'lg';
   className?: string; // Kept for backward compatibility
   textClassName?: string; // Kept for backward compatibility
@@ -13,6 +13,7 @@ interface ButtonProps {
   children: React.ReactNode;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  buttonText?: string; // Added for compatibility with other components
   icon?: string;
 }
 
@@ -26,6 +27,7 @@ export const Button = ({
   style,
   textStyle,
   icon,
+  buttonText,
   // Ignored props for compatibility
   className,
   textClassName,
@@ -65,6 +67,8 @@ export const Button = ({
         return theme.colors.primary;
       case 'secondary':
         return theme.colors.secondary;
+      case 'destructive':
+        return theme.colors.error;
       default:
         return undefined; // Use default Paper theme colors
     }
@@ -72,8 +76,20 @@ export const Button = ({
 
   // Handle string children or complex children differently
   const renderContent = () => {
+    // If buttonText is provided, use it (takes precedence)
+    if (buttonText) {
+      return (
+        <Text 
+          style={textStyle}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {buttonText}
+        </Text>
+      );
+    }
     // If children is a string, wrap it in a Text component
-    if (typeof children === 'string') {
+    else if (typeof children === 'string') {
       return (
         <Text 
           style={textStyle}

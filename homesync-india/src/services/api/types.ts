@@ -93,11 +93,16 @@ export interface Bill {
 export interface Document {
   id: string;
   title: string;
+  name: string; // Adding name property that's used in DocumentDetailScreen
   fileUrl: string;
   fileType: string;
+  fileSize: number; // Adding fileSize property
+  path?: string; // Adding path property
   category: string;
   tags?: string[];
+  sharedWith: { id: string; name: string; email: string }[]; // Adding sharedWith property
   expiryDate?: string;
+  uploadDate: string; // Adding uploadDate property
   createdAt: string;
   updatedAt: string;
 }
@@ -132,6 +137,90 @@ export interface Event {
   description?: string;
   reminderTime?: string;
   category: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Alias for Event to fix import issues
+export type CalendarEvent = Event;
+
+// Vehicle Management Types
+export interface Vehicle {
+  id: string;
+  make: string;
+  model: string;
+  year: number;
+  licensePlate: string;
+  color?: string;
+  vinNumber?: string;
+  purchaseDate?: string;
+  insuranceDetails?: {
+    provider: string;
+    policyNumber: string;
+    expiryDate: string;
+    premium: number;
+  };
+  serviceHistory: {
+    id: string;
+    date: string;
+    type: string;
+    description: string;
+    mileage: number;
+    cost: number;
+    serviceCenter: string;
+    documents?: Document[];
+  }[];
+  documents: Document[];
+  fuelType: string;
+  currentMileage: number;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Family Management Types
+export interface FamilyMember {
+  id: string;
+  name: string;
+  relationship: string;
+  dateOfBirth?: string;
+  phoneNumber?: string;
+  email?: string;
+  address?: string;
+  emergencyContact?: {
+    name: string;
+    phoneNumber: string;
+    relationship: string;
+  };
+  healthDetails?: {
+    bloodGroup?: string;
+    allergies: string[];
+    conditions: string[];
+    medications: string[];
+  };
+  documents: Document[];
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Finance Management Types
+export interface Transaction {
+  id: string;
+  amount: number;
+  type: 'income' | 'expense' | 'transfer';
+  category: string;
+  description?: string;
+  date: string;
+  paymentMethod?: string;
+  relatedBillId?: string;
+  relatedDocumentId?: string;
+  recurrence?: {
+    frequency: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+    endDate?: string;
+  };
+  tags?: string[];
+  location?: string;
   createdAt: string;
   updatedAt: string;
 }
