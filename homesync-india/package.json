@@ -9,14 +9,32 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-navigation/native": "^7.1.14",
+    "@react-navigation/stack": "^7.4.2",
+    "@types/react-native-snap-carousel": "^3.8.11",
     "expo": "~53.0.15",
+    "expo-dev-client": "^5.2.2",
     "expo-status-bar": "~2.2.3",
+    "fbjs": "^3.0.5",
     "react": "19.0.0",
-    "react-native": "0.79.4"
+    "react-addons-shallow-compare": "^15.6.3",
+    "react-native": "0.79.4",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-paper": "^5.14.5",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "^5.4.0",
+    "react-native-screens": "^4.11.1",
+    "react-native-snap-carousel": "^3.9.1",
+    "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
+    "glob": "^11.0.3",
+    "nativewind": "^4.1.23",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^3.4.17",
     "typescript": "~5.8.3"
   },
   "private": true
