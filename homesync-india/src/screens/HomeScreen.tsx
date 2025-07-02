@@ -1,66 +1,60 @@
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import { Text, Button, useTheme } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import { Text, Button, useTheme } from "react-native-paper";
+import ScreenContainer from "../components/animations/ScreenContainer";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen: React.FC = () => {
   const theme = useTheme();
   const navigation = useNavigation<any>();
 
   const goToAdmin = () => {
-    navigation.navigate('Admin');
+    navigation.navigate("Admin");
   };
 
   const goToLogin = () => {
-    navigation.navigate('Login');
+    navigation.navigate("Login");
   };
-  
+
   return (
-    <SafeAreaView style={styles.container}>
+    <ScreenContainer style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text variant="headlineLarge" style={styles.title}>HomeSync India</Text>
+          <Text variant="headlineLarge" style={styles.title}>
+            HomeSync India
+          </Text>
           <Text variant="bodyLarge" style={styles.subtitle}>
             Your complete household management solution
           </Text>
         </View>
-        
+
         <View style={styles.buttonContainer}>
-          <Button 
-            mode="contained" 
-            style={styles.button}
-            onPress={goToLogin}
-          >
+          <Button mode="contained" style={styles.button} onPress={goToLogin}>
             Sign In
           </Button>
-          
-          <Button 
-            mode="outlined" 
-            style={styles.button}
-            onPress={goToAdmin}
-          >
+
+          <Button mode="outlined" style={styles.button} onPress={goToAdmin}>
             Admin Dashboard
           </Button>
         </View>
       </View>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 60,
   },
   logo: {
@@ -69,18 +63,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subtitle: {
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
     marginBottom: 10,
   },
   buttonContainer: {
-    width: '100%',
+    width: "100%",
     maxWidth: 300,
   },
   button: {
