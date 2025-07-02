@@ -116,6 +116,7 @@ export interface GroceryItem {
   unit: string;
   isCompleted: boolean;
   notes?: string;
+  createdAt: string; // Adding createdAt property used in GroceryItemDetailScreen
 }
 
 export interface GroceryList {
@@ -169,6 +170,8 @@ export interface Vehicle {
     cost: number;
     serviceCenter: string;
     documents?: Document[];
+    odometer?: number; // Added odometer property used in VehicleDetailScreen
+    service?: string;  // Added service property used in VehicleDetailScreen
   }[];
   documents: Document[];
   fuelType: string;
@@ -185,6 +188,7 @@ export interface FamilyMember {
   relationship: string;
   dateOfBirth?: string;
   phoneNumber?: string;
+  phone?: string; // Alias for phoneNumber used in some screens
   email?: string;
   address?: string;
   emergencyContact?: {
@@ -196,8 +200,11 @@ export interface FamilyMember {
     bloodGroup?: string;
     allergies: string[];
     conditions: string[];
-    medications: string[];
+    medications: { name: string; dosage: string; frequency: string; time: string; }[];
   };
+  bloodGroup?: string; // Direct access to bloodGroup (not through healthDetails)
+  profilePic?: string; // Profile picture URL
+  role?: string; // Role in the family (e.g., 'admin')
   documents: Document[];
   notes?: string;
   createdAt: string;
@@ -213,6 +220,7 @@ export interface Transaction {
   description?: string;
   date: string;
   paymentMethod?: string;
+  account: string; // Added account property used in Finance screens
   relatedBillId?: string;
   relatedDocumentId?: string;
   recurrence?: {

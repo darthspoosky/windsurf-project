@@ -29,8 +29,11 @@ export type RootStackParamList = {
   // Staff Management
   Staff: undefined;
   StaffDetail: { staffId: string };
+  StaffDetails: { staffId: string }; // Alias for StaffDetail
+  StaffList: undefined;
   AddStaff: undefined;
   EditStaff: { staffId: string };
+  StaffAttendance: { staffId: string };
   
   // Bills Management
   Bills: undefined;
@@ -40,6 +43,8 @@ export type RootStackParamList = {
   
   // Grocery Management
   Grocery: undefined;
+  GroceryList: undefined;
+  GroceryCategories: undefined;
   GroceryItemDetail: { itemId: string };
   AddGroceryItem: undefined;
   EditGroceryItem: { itemId: string };
@@ -53,6 +58,7 @@ export type RootStackParamList = {
   // Vehicle Management
   Vehicle: undefined;
   VehicleDetail: { vehicleId: string };
+  VehicleDetails: { vehicleId: string }; // Alias for VehicleDetail
   AddVehicle: undefined;
   EditVehicle: { vehicleId: string };
   AddServiceRecord: { vehicleId: string };
@@ -60,6 +66,7 @@ export type RootStackParamList = {
   // Finance Management
   FinanceOverview: undefined;
   TransactionDetail: { transactionId: string };
+  TransactionHistory: undefined;
   AddTransaction: undefined;
   EditTransaction: { transactionId: string };
   
@@ -68,6 +75,8 @@ export type RootStackParamList = {
   FamilyMemberDetails: { memberId: string };
   AddFamilyMember: undefined;
   EditFamilyMember: { memberId: string };
+  AddFamilyDocument: { memberId: string };
+  AddHealthRecord: { memberId: string };
   
   // Document Vault
   DocumentList: undefined;
