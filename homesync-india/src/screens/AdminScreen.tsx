@@ -3,8 +3,6 @@ import { ScrollView, StyleSheet, View, TouchableOpacity, RefreshControl, Dimensi
 import { Text, useTheme, Card, IconButton, Button, ActivityIndicator } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
 
 type Screen = {
   name: string;
@@ -19,8 +17,6 @@ type ModuleSection = {
 
 const { width: screenWidth } = Dimensions.get('window');
 
-type AdminScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Admin'>;
-
 const AdminScreen: React.FC = () => {
   const theme = useTheme();
   const navigation = useNavigation<AdminScreenNavigationProp>();
@@ -28,11 +24,11 @@ const AdminScreen: React.FC = () => {
 
   // Statistics data
   const stats = [
-    { label: 'Staff Members', value: '4' },
-    { label: 'Bills Due', value: '7' },
-    { label: "Today's Events", value: '3' },
+    { label: "Staff Members", value: "4" },
+    { label: "Bills Due", value: "7" },
+    { label: "Today's Events", value: "3" },
   ];
-  
+
   // Handle refresh
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -46,38 +42,38 @@ const AdminScreen: React.FC = () => {
   // Module sections data
   const sections: ModuleSection[] = [
     {
-      title: 'Home Management',
+      title: "Home Management",
       screens: [
-        { name: 'Staff', route: 'Staff', icon: 'account-group' },
-        { name: 'Bills', route: 'Bills', icon: 'file-document' },
-        { name: 'Grocery', route: 'Grocery', icon: 'cart' },
-        { name: 'Calendar', route: 'Calendar', icon: 'calendar' },
+        { name: "Staff", route: "Staff", icon: "account-group" },
+        { name: "Bills", route: "Bills", icon: "file-document" },
+        { name: "Grocery", route: "Grocery", icon: "cart" },
+        { name: "Calendar", route: "Calendar", icon: "calendar" },
       ],
     },
     {
-      title: 'Family & Finance',
+      title: "Family & Finance",
       screens: [
-        { name: 'Vehicle', route: 'Vehicle', icon: 'car' },
-        { name: 'Finance', route: 'FinanceOverview', icon: 'currency-inr' },
-        { name: 'Family', route: 'FamilyList', icon: 'account-multiple' },
-        { name: 'Documents', route: 'DocumentList', icon: 'folder' },
+        { name: "Vehicle", route: "Vehicle", icon: "car" },
+        { name: "Finance", route: "FinanceOverview", icon: "currency-inr" },
+        { name: "Family", route: "FamilyList", icon: "account-multiple" },
+        { name: "Documents", route: "DocumentList", icon: "folder" },
       ],
     },
     {
-      title: 'Health & Services',
+      title: "Health & Services",
       screens: [
-        { name: 'Health', route: 'HealthDashboard', icon: 'heart-pulse' },
-        { name: 'Analytics', route: 'Analytics', icon: 'chart-bar' },
-        { name: 'Chat', route: 'Chat', icon: 'message' },
-        { name: 'Settings', route: 'AISettings', icon: 'cog' },
+        { name: "Health", route: "HealthDashboard", icon: "heart-pulse" },
+        { name: "Analytics", route: "Analytics", icon: "chart-bar" },
+        { name: "Chat", route: "Chat", icon: "message" },
+        { name: "Settings", route: "AISettings", icon: "cog" },
       ],
     },
   ];
-  
+
   const navigateTo = (routeName: string) => {
     navigation.navigate(routeName);
   };
-  
+
   // Define screen preview type
   type ScreenPreview = {
     title: string;
@@ -85,7 +81,7 @@ const AdminScreen: React.FC = () => {
     route: string; // This will be refined with keyof RootStackParamList when used
     description: string;
   };
-  
+
   // Get the available routes from the navigation state
   const getAvailableScreens = (): Array<keyof RootStackParamList> => {
     const state = navigation.getState();
@@ -93,7 +89,7 @@ const AdminScreen: React.FC = () => {
   };
 
   // All possible screens for the carousel
-  const allScreenPreviews: Array<ScreenPreview & { route: keyof RootStackParamList }> = [
+  const allScreenPreviews: ScreenPreview[] = [
     { title: 'Home', icon: 'home', route: 'Home', description: 'Landing page with login options' },
     { title: 'Staff', icon: 'account-group', route: 'Staff', description: 'Manage household staff' },
     { title: 'Bills', icon: 'file-document', route: 'Bills', description: 'Track and pay bills' },
@@ -107,17 +103,17 @@ const AdminScreen: React.FC = () => {
     { title: 'Analytics', icon: 'chart-bar', route: 'Analytics', description: 'Household insights' },
     { title: 'Login', icon: 'login', route: 'Login', description: 'User authentication' },
   ];
-  
+
   // Filter to only available screens
   const availableRoutes = getAvailableScreens();
-  const screenPreviews = allScreenPreviews.filter(screen => 
+  const screenPreviews: ScreenPreview[] = allScreenPreviews.filter(screen => 
     availableRoutes.includes(screen.route)
   );
-  
+
   // No carousel render item needed with simple ScrollView
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScreenContainer style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -131,26 +127,36 @@ const AdminScreen: React.FC = () => {
         }
       >
         <View style={styles.headerContainer}>
-          <Text variant="headlineLarge" style={styles.title}>Admin Dashboard</Text>
-          <Text variant="bodyMedium" style={styles.subtitle}>HomeSync India Management Console</Text>
+          <Text variant="headlineLarge" style={styles.title}>
+            Admin Dashboard
+          </Text>
+          <Text variant="bodyMedium" style={styles.subtitle}>
+            HomeSync India Management Console
+          </Text>
         </View>
-        
+
         {/* Quick Stats Section */}
         <View style={styles.statsContainer}>
           {stats.map((stat, index) => (
             <Card key={index} style={styles.statCard}>
               <Card.Content style={styles.statContent}>
-                <Text variant="headlineMedium" style={styles.statValue}>{stat.value}</Text>
-                <Text variant="bodySmall" style={styles.statLabel}>{stat.label}</Text>
+                <Text variant="headlineMedium" style={styles.statValue}>
+                  {stat.value}
+                </Text>
+                <Text variant="bodySmall" style={styles.statLabel}>
+                  {stat.label}
+                </Text>
               </Card.Content>
             </Card>
           ))}
         </View>
-        
+
         {/* Module Sections */}
         {sections.map((section, sectionIndex) => (
           <View key={sectionIndex} style={styles.sectionContainer}>
-            <Text variant="titleMedium" style={styles.sectionTitle}>{section.title}</Text>
+            <Text variant="titleMedium" style={styles.sectionTitle}>
+              {section.title}
+            </Text>
             <View style={styles.moduleGrid}>
               {section.screens.map((screen, screenIndex) => (
                 <TouchableOpacity
@@ -166,7 +172,9 @@ const AdminScreen: React.FC = () => {
                         iconColor={theme.colors.primary}
                         style={styles.moduleIcon}
                       />
-                      <Text variant="bodyMedium" style={styles.moduleTitle}>{screen.name}</Text>
+                      <Text variant="bodyMedium" style={styles.moduleTitle}>
+                        {screen.name}
+                      </Text>
                     </Card.Content>
                   </Card>
                 </TouchableOpacity>
@@ -174,32 +182,46 @@ const AdminScreen: React.FC = () => {
             </View>
           </View>
         ))}
-        
+
         {/* Recent Notifications Preview */}
         <View style={styles.notificationsSection}>
           <View style={styles.notificationsHeader}>
-            <Text variant="titleMedium" style={styles.sectionTitle}>Recent Notifications</Text>
-            <Button mode="text" onPress={() => {}}>View All</Button>
+            <Text variant="titleMedium" style={styles.sectionTitle}>
+              Recent Notifications
+            </Text>
+            <Button mode="text" onPress={() => {}}>
+              View All
+            </Button>
           </View>
           <Card style={styles.notificationCard}>
             <Card.Content>
-              <Text variant="bodyMedium">Staff attendance updated for Ramesh</Text>
-              <Text variant="bodySmall" style={styles.notificationTime}>2 hours ago</Text>
+              <Text variant="bodyMedium">
+                Staff attendance updated for Ramesh
+              </Text>
+              <Text variant="bodySmall" style={styles.notificationTime}>
+                2 hours ago
+              </Text>
             </Card.Content>
           </Card>
           <Card style={styles.notificationCard}>
             <Card.Content>
               <Text variant="bodyMedium">Electricity bill due tomorrow</Text>
-              <Text variant="bodySmall" style={styles.notificationTime}>5 hours ago</Text>
+              <Text variant="bodySmall" style={styles.notificationTime}>
+                5 hours ago
+              </Text>
             </Card.Content>
           </Card>
         </View>
-        
+
         {/* Screen Carousel */}
         <View style={styles.carouselSection}>
-          <Text variant="titleMedium" style={styles.sectionTitle}>Available Screens</Text>
-          <Text variant="bodySmall" style={styles.carouselSubtitle}>Swipe to preview and navigate</Text>
-          
+          <Text variant="titleMedium" style={styles.sectionTitle}>
+            Available Screens
+          </Text>
+          <Text variant="bodySmall" style={styles.carouselSubtitle}>
+            Swipe to preview and navigate
+          </Text>
+
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -216,10 +238,17 @@ const AdminScreen: React.FC = () => {
                       size={40}
                       iconColor={theme.colors.primary}
                     />
-                    <Text variant="titleMedium" style={styles.carouselTitle}>{item.title}</Text>
-                    <Text variant="bodySmall" style={styles.carouselDescription}>{item.description}</Text>
-                    <Button 
-                      mode="contained" 
+                    <Text variant="titleMedium" style={styles.carouselTitle}>
+                      {item.title}
+                    </Text>
+                    <Text
+                      variant="bodySmall"
+                      style={styles.carouselDescription}
+                    >
+                      {item.description}
+                    </Text>
+                    <Button
+                      mode="contained"
                       style={styles.carouselButton}
                       onPress={() => {
                         // Type-safe navigation using type assertion
@@ -235,17 +264,17 @@ const AdminScreen: React.FC = () => {
             ))}
           </ScrollView>
         </View>
-        
+
         <View style={styles.spacer} />
       </ScrollView>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: "#f8f9fa",
   },
   scrollContent: {
     padding: 16,
@@ -254,18 +283,18 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 4,
-    color: '#333',
-    flexWrap: 'wrap',
+    color: "#333",
+    flexWrap: "wrap",
   },
   subtitle: {
-    color: '#666',
-    flexWrap: 'wrap',
+    color: "#666",
+    flexWrap: "wrap",
   },
   statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 24,
   },
   statCard: {
@@ -274,34 +303,34 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   statContent: {
-    alignItems: 'center',
+    alignItems: "center",
     padding: 8,
   },
   statValue: {
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   statLabel: {
-    color: '#666',
-    textAlign: 'center',
-    flexWrap: 'wrap',
+    color: "#666",
+    textAlign: "center",
+    flexWrap: "wrap",
   },
   sectionContainer: {
     marginBottom: 24,
   },
   sectionTitle: {
     marginBottom: 12,
-    color: '#333',
-    fontWeight: '600',
+    color: "#333",
+    fontWeight: "600",
   },
   moduleGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     marginHorizontal: -4,
   },
   moduleCard: {
-    width: '25%',
+    width: "25%",
     paddingHorizontal: 4,
     marginBottom: 16,
   },
@@ -310,18 +339,18 @@ const styles = StyleSheet.create({
     height: 96,
   },
   moduleCardContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 8,
-    height: '100%',
+    height: "100%",
   },
   moduleIcon: {
     margin: 0,
     padding: 0,
   },
   moduleTitle: {
-    textAlign: 'center',
-    flexWrap: 'wrap',
+    textAlign: "center",
+    flexWrap: "wrap",
     fontSize: 12,
     marginTop: 4,
   },
@@ -329,9 +358,9 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   notificationsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 8,
   },
   notificationCard: {
@@ -339,7 +368,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   notificationTime: {
-    color: '#999',
+    color: "#999",
     marginTop: 4,
   },
   spacer: {
@@ -356,9 +385,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   carouselSubtitle: {
-    color: '#666',
+    color: "#666",
     marginBottom: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
   carouselCard: {
     elevation: 4,
@@ -366,20 +395,20 @@ const styles = StyleSheet.create({
     height: 220,
   },
   carouselCardContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
     padding: 16,
   },
   carouselTitle: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 8,
-    textAlign: 'center',
+    textAlign: "center",
   },
   carouselDescription: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 16,
-    color: '#666',
+    color: "#666",
   },
   carouselButton: {
     marginTop: 8,
