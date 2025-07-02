@@ -11,8 +11,44 @@ import { RootStackParamList } from '../../navigation/AppNavigator';
 // Types
 type HealthDashboardNavigationProp = StackNavigationProp<RootStackParamList, 'HealthDashboard'>;
 
+type HealthFamilyMember = {
+  id: string;
+  name: string;
+  age: number;
+  gender: string;
+  bloodGroup: string;
+  lastCheckup: string;
+  upcomingAppointment: string | null;
+  chronicConditions: string[];
+  allergies: string[];
+  medicationReminders: number;
+};
+
+type Appointment = {
+  id: string;
+  familyMemberId: string;
+  memberName: string;
+  doctor: string;
+  specialty: string;
+  date: string;
+  time: string;
+  location: string;
+  reason: string;
+};
+
+type MedicationReminder = {
+  id: string;
+  familyMemberId: string;
+  memberName: string;
+  medication: string;
+  dosage: string;
+  frequency: string;
+  timing: string;
+  refillDate: string;
+};
+
 // Mock family member data
-const familyMembers = [
+const familyMembers: HealthFamilyMember[] = [
   {
     id: '1',
     name: 'Raj Sharma',
@@ -64,7 +100,7 @@ const familyMembers = [
 ];
 
 // Mock upcoming appointments
-const upcomingAppointments = [
+const upcomingAppointments: Appointment[] = [
   {
     id: '1',
     familyMemberId: '1',
@@ -90,7 +126,7 @@ const upcomingAppointments = [
 ];
 
 // Mock medication reminders
-const medicationReminders = [
+const medicationReminders: MedicationReminder[] = [
   {
     id: '1',
     familyMemberId: '1',
@@ -166,19 +202,19 @@ const HealthDashboardScreen = () => {
   };
 
   // Get health status indicator color based on conditions
-  const getHealthStatusColor = (member: typeof familyMembers[0]) => {
+  const getHealthStatusColor = (member: HealthFamilyMember) => {
     if (member.chronicConditions.length > 0) return 'bg-amber-500'; // Amber for chronic conditions
     if (member.medicationReminders > 0) return 'bg-blue-500'; // Blue for medication reminders
     return 'bg-green-500'; // Green for healthy
   };
 
   // Get upcoming appointment for a member
-  const getMemberAppointments = (memberId: string) => {
+  const getMemberAppointments = (memberId: string): Appointment[] => {
     return upcomingAppointments.filter(app => app.familyMemberId === memberId);
   };
 
   // Get medication reminders for a member
-  const getMemberMedications = (memberId: string) => {
+  const getMemberMedications = (memberId: string): MedicationReminder[] => {
     return medicationReminders.filter(med => med.familyMemberId === memberId);
   };
 

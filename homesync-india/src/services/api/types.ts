@@ -131,13 +131,13 @@ export interface GroceryList {
 export interface Event {
   id: string;
   title: string;
-  startDate: string;
-  endDate?: string;
-  allDay: boolean;
-  location?: string;
-  description?: string;
-  reminderTime?: string;
+  date: string;            // Changed from startDate to match CalendarScreen usage
+  startTime: string | null;  // Added to match CalendarScreen usage
+  endTime: string | null;    // Added to match CalendarScreen usage
+  location: string;        // Changed from optional to match CalendarScreen usage
+  description: string;     // Changed from optional to match CalendarScreen usage
   category: string;
+  attendees: string[];     // Added to match CalendarScreen usage
   createdAt: string;
   updatedAt: string;
 }
@@ -148,13 +148,18 @@ export type CalendarEvent = Event;
 // Vehicle Management Types
 export interface Vehicle {
   id: string;
-  make: string;
+  make?: string;
+  name?: string;             // Added name property used in VehicleDetailScreen
   model: string;
   year: number;
-  licensePlate: string;
+  licensePlate?: string;
+  registrationNumber?: string; // Added property used in VehicleDetailScreen
+  type?: string;             // Added type property used in VehicleDetailScreen (Sedan, SUV, etc.)
   color?: string;
   vinNumber?: string;
   purchaseDate?: string;
+  insuranceExpiryDate?: string; // Added property used in VehicleDetailScreen
+  pollutionExpiryDate?: string; // Added property used in VehicleDetailScreen
   insuranceDetails?: {
     provider: string;
     policyNumber: string;
@@ -162,20 +167,20 @@ export interface Vehicle {
     premium: number;
   };
   serviceHistory: {
-    id: string;
+    id?: string;
     date: string;
-    type: string;
-    description: string;
-    mileage: number;
+    type?: string;
+    description?: string;
+    mileage?: number;
     cost: number;
-    serviceCenter: string;
+    serviceCenter?: string;
     documents?: Document[];
-    odometer?: number; // Added odometer property used in VehicleDetailScreen
-    service?: string;  // Added service property used in VehicleDetailScreen
+    odometer?: number;  // Added odometer property used in VehicleDetailScreen
+    service?: string;   // Added service property used in VehicleDetailScreen
   }[];
   documents: Document[];
   fuelType: string;
-  currentMileage: number;
+  currentMileage?: number;
   notes?: string;
   createdAt: string;
   updatedAt: string;
