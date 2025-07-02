@@ -3,10 +3,14 @@ import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { Text, Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation/AppNavigator';
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 const HomeScreen: React.FC = () => {
   const theme = useTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const goToAdmin = () => {
     navigation.navigate('Admin');

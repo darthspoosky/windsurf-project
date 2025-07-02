@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, View, TouchableOpacity, RefreshControl, Dimensi
 import { Text, useTheme, Card, IconButton, Button, ActivityIndicator } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
 type Screen = {
   name: string;
@@ -17,9 +19,11 @@ type ModuleSection = {
 
 const { width: screenWidth } = Dimensions.get('window');
 
+type AdminScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Admin'>;
+
 const AdminScreen: React.FC = () => {
   const theme = useTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<AdminScreenNavigationProp>();
   const [refreshing, setRefreshing] = useState(false);
 
   // Statistics data
@@ -78,18 +82,18 @@ const AdminScreen: React.FC = () => {
   type ScreenPreview = {
     title: string;
     icon: string;
-    route: string;
+    route: string; // This will be refined with keyof RootStackParamList when used
     description: string;
   };
   
   // Get the available routes from the navigation state
-  const getAvailableScreens = () => {
+  const getAvailableScreens = (): Array<keyof RootStackParamList> => {
     const state = navigation.getState();
-    return state.routeNames;
+    return state.routeNames as Array<keyof RootStackParamList>;
   };
 
   // All possible screens for the carousel
-  const allScreenPreviews: ScreenPreview[] = [
+  const allScreenPreviews: Array<ScreenPreview & { route: keyof RootStackParamList }> = [
     { title: 'Home', icon: 'home', route: 'Home', description: 'Landing page with login options' },
     { title: 'Staff', icon: 'account-group', route: 'Staff', description: 'Manage household staff' },
     { title: 'Bills', icon: 'file-document', route: 'Bills', description: 'Track and pay bills' },
@@ -106,7 +110,7 @@ const AdminScreen: React.FC = () => {
   
   // Filter to only available screens
   const availableRoutes = getAvailableScreens();
-  const screenPreviews: ScreenPreview[] = allScreenPreviews.filter(screen => 
+  const screenPreviews = allScreenPreviews.filter(screen => 
     availableRoutes.includes(screen.route)
   );
   
@@ -217,7 +221,11 @@ const AdminScreen: React.FC = () => {
                     <Button 
                       mode="contained" 
                       style={styles.carouselButton}
-                      onPress={() => navigation.navigate(item.route)}
+                      onPress={() => {
+                        // Type-safe navigation using type assertion
+                        // This is safe because we've already filtered to ensure routes exist
+                        navigation.navigate(item.route as keyof RootStackParamList);
+                      }}
                     >
                       Open Screen
                     </Button>
