@@ -3,6 +3,9 @@ import { ScrollView, StyleSheet, View, TouchableOpacity, RefreshControl, Dimensi
 import { Text, useTheme, Card, IconButton, Button, ActivityIndicator } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import ScreenContainer from '../components/animations/ScreenContainer';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
 type Screen = {
   name: string;
@@ -16,6 +19,9 @@ type ModuleSection = {
 };
 
 const { width: screenWidth } = Dimensions.get('window');
+
+type AdminScreenNavigationProp =
+  StackNavigationProp<RootStackParamList, 'Admin'>;
 
 const AdminScreen: React.FC = () => {
   const theme = useTheme();
