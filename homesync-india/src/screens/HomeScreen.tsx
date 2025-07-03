@@ -1,20 +1,12 @@
-<<<<<<< HEAD
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { Text, Button, useTheme } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import ScreenContainer from '../components/animations/ScreenContainer';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
-=======
-import React from "react";
-import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
-import { Text, Button, useTheme } from "react-native-paper";
-import ScreenContainer from "../components/animations/ScreenContainer";
-import { useNavigation } from "@react-navigation/native";
->>>>>>> 7414ffd470a2d9b0ce4e20c3a5ddda89bb55c09e
 
 const HomeScreen: React.FC = () => {
   const theme = useTheme();

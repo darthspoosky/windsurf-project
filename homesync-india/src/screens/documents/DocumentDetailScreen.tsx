@@ -23,47 +23,63 @@ type DocumentDetailNavigationProp = StackNavigationProp<RootStackParamList, 'Doc
 const mockDocuments: Document[] = [
   {
     id: 'd1',
+    title: 'House Purchase Agreement',
     name: 'House Purchase Agreement',
     category: 'Property',
     uploadDate: '2025-01-15',
     fileType: 'pdf',
     fileSize: 2.4,
+    fileUrl: '/documents/property/house_agreement.pdf',
     path: '/documents/property/house_agreement.pdf',
     tags: ['property', 'legal', 'house'],
-    sharedWith: ['Priya Kumar'],
+    sharedWith: [{ id: 'u1', name: 'Priya Kumar', email: 'priya@example.com' }],
+    createdAt: '2025-01-15',
+    updatedAt: '2025-01-15'
   },
   {
     id: 'd2',
+    title: 'Car Insurance Policy',
     name: 'Car Insurance Policy',
     category: 'Vehicle',
     uploadDate: '2025-03-20',
     fileType: 'pdf',
     fileSize: 1.8,
+    fileUrl: '/documents/vehicle/car_insurance.pdf',
     path: '/documents/vehicle/car_insurance.pdf',
     tags: ['car', 'insurance', 'honda'],
     sharedWith: [],
+    createdAt: '2025-03-20',
+    updatedAt: '2025-03-20'
   },
   {
     id: 'd3',
+    title: 'Medical Insurance Policy',
     name: 'Medical Insurance Policy',
     category: 'Insurance',
     uploadDate: '2025-02-10',
     fileType: 'pdf',
     fileSize: 3.2,
+    fileUrl: '/documents/insurance/medical_policy.pdf',
     path: '/documents/insurance/medical_policy.pdf',
     tags: ['health', 'insurance', 'family'],
-    sharedWith: ['Priya Kumar'],
+    sharedWith: [{ id: 'u1', name: 'Priya Kumar', email: 'priya@example.com' }],
+    createdAt: '2025-02-10',
+    updatedAt: '2025-02-10'
   },
   {
     id: 'd4',
+    title: 'Electricity Bill - March 2025',
     name: 'Electricity Bill - March 2025',
     category: 'Utilities',
     uploadDate: '2025-03-05',
     fileType: 'pdf',
     fileSize: 0.7,
+    fileUrl: '/documents/bills/electricity_mar25.pdf',
     path: '/documents/bills/electricity_mar25.pdf',
     tags: ['bill', 'utility', 'electricity'],
     sharedWith: [],
+    createdAt: '2025-03-05',
+    updatedAt: '2025-03-05'
   },
 ];
 
@@ -213,7 +229,9 @@ const DocumentDetailScreen = () => {
   };
   
   const handleShareWithFamily = () => {
-    navigation.navigate('ShareDocument', { documentId: document?.id });
+    if (document) {
+      navigation.navigate('ShareDocument', { documentId: document.id });
+    }
   };
 
   if (loading || !document) {
@@ -302,7 +320,7 @@ const DocumentDetailScreen = () => {
             <View className="flex-row items-center mt-1">
               <View className={`h-6 w-6 rounded-full ${categoryColors[document.category] || 'bg-gray-100'} items-center justify-center mr-2`}>
                 <Ionicons 
-                  name={categoryIcons[document.category] || 'document-outline'} 
+                  name={categoryIcons[document.category] as any || 'document-outline' as any} 
                   size={14} 
                   color="#6366f1" 
                 />
@@ -348,7 +366,7 @@ const DocumentDetailScreen = () => {
             </Button>
           </View>
           
-          {document.tags.length > 0 ? (
+          {document.tags && document.tags.length > 0 ? (
             <View className="flex-row flex-wrap">
               {document.tags.map((tag, index) => (
                 <View key={index} className="bg-gray-100 rounded-full px-3 py-2 mr-2 mb-2 flex-row items-center">
@@ -387,9 +405,9 @@ const DocumentDetailScreen = () => {
             document.sharedWith.map((person, index) => (
               <View key={index} className="flex-row items-center mb-2 last:mb-0">
                 <View className="h-8 w-8 rounded-full bg-primary items-center justify-center mr-2">
-                  <Text className="text-white font-bold">{person.charAt(0)}</Text>
+                  <Text className="text-white font-bold">{person.name.charAt(0)}</Text>
                 </View>
-                <Text className="text-gray-800 flex-1">{person}</Text>
+                <Text className="text-gray-800 flex-1">{person.name}</Text>
                 <TouchableOpacity 
                   onPress={() => {
                     // In a real app, this would remove sharing permission

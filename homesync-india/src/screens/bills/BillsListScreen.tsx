@@ -8,7 +8,7 @@ import Card from '../../components/ui/Card';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { Bill } from '../../services/api/types';
 
-type BillsListNavigationProp = StackNavigationProp<RootStackParamList, 'BillsList'>;
+type BillsListNavigationProp = StackNavigationProp<RootStackParamList, 'Bills'>;
 
 // Mock data for bills
 const mockBillsData: Bill[] = [
@@ -84,7 +84,7 @@ const BillsListScreen = () => {
     return bill.status === filter;
   });
   
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: 'paid' | 'unpaid' | 'overdue') => {
     switch (status) {
       case 'paid': return 'bg-green-100 text-green-800';
       case 'unpaid': return 'bg-yellow-100 text-yellow-800';
@@ -144,13 +144,12 @@ const BillsListScreen = () => {
                 variant="primary"
                 size="sm"
                 className="flex-1 mr-2"
-                onPress={(e) => {
-                  e.stopPropagation();
-                  // Handle payment
-                  const updatedBills = bills.map(bill => 
-                    bill.id === item.id ? {...bill, status: 'paid', updatedAt: new Date().toISOString()} : bill
-                  );
-                  setBills(updatedBills);
+                onPress={() => {
+                  // Update bill status to paid
+                  const updatedBills = [...bills];
+                  const index = updatedBills.findIndex(b => b.id === item.id);
+                  updatedBills[index] = { ...updatedBills[index], status: 'paid', updatedAt: new Date().toISOString() };
+                  setBills(updatedBills as Bill[]);
                 }}
               >
                 Pay Now
@@ -160,8 +159,7 @@ const BillsListScreen = () => {
                 variant="outline"
                 size="sm"
                 className="flex-1"
-                onPress={(e) => {
-                  e.stopPropagation();
+                onPress={() => {
                   navigation.navigate('BillEdit', { billId: item.id });
                 }}
               >

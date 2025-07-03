@@ -28,7 +28,11 @@ const mockDocuments: Document[] = [
     fileSize: 2.4,
     path: '/documents/property/house_agreement.pdf',
     tags: ['property', 'legal', 'house'],
-    sharedWith: ['Priya Kumar'],
+    sharedWith: [{ id: 'u1', name: 'Priya Kumar', email: 'priya@example.com' }],
+    title: 'House Purchase Agreement',
+    fileUrl: '/storage/house_agreement.pdf',
+    createdAt: '2025-01-15',
+    updatedAt: '2025-01-15'
   },
   {
     id: 'd2',
@@ -40,6 +44,10 @@ const mockDocuments: Document[] = [
     path: '/documents/vehicle/car_insurance.pdf',
     tags: ['car', 'insurance', 'honda'],
     sharedWith: [],
+    title: 'Car Insurance Policy',
+    fileUrl: '/storage/car_insurance.pdf',
+    createdAt: '2025-03-20',
+    updatedAt: '2025-03-20',
   },
   {
     id: 'd3',
@@ -50,7 +58,11 @@ const mockDocuments: Document[] = [
     fileSize: 3.2,
     path: '/documents/insurance/medical_policy.pdf',
     tags: ['health', 'insurance', 'family'],
-    sharedWith: ['Priya Kumar'],
+    sharedWith: [{ id: 'u1', name: 'Priya Kumar', email: 'priya@example.com' }],
+    title: 'Medical Insurance Policy',
+    fileUrl: '/storage/medical_policy.pdf',
+    createdAt: '2025-02-10',
+    updatedAt: '2025-02-10'
   },
   {
     id: 'd4',
@@ -62,6 +74,10 @@ const mockDocuments: Document[] = [
     path: '/documents/bills/electricity_mar25.pdf',
     tags: ['bill', 'utility', 'electricity'],
     sharedWith: [],
+    title: 'Car Insurance Policy',
+    fileUrl: '/storage/car_insurance.pdf',
+    createdAt: '2025-03-20',
+    updatedAt: '2025-03-20',
   },
   {
     id: 'd5',
@@ -73,6 +89,10 @@ const mockDocuments: Document[] = [
     path: '/documents/education/arjun_admission.pdf',
     tags: ['school', 'arjun', 'education'],
     sharedWith: [],
+    title: 'Car Insurance Policy',
+    fileUrl: '/storage/car_insurance.pdf',
+    createdAt: '2025-03-20',
+    updatedAt: '2025-03-20',
   },
   {
     id: 'd6',
@@ -83,7 +103,11 @@ const mockDocuments: Document[] = [
     fileSize: 1.5,
     path: '/documents/identity/rajesh_passport.pdf',
     tags: ['passport', 'identity', 'travel'],
-    sharedWith: ['Priya Kumar'],
+    sharedWith: [{ id: 'u1', name: 'Priya Kumar', email: 'priya@example.com' }],
+    title: 'Passport - Rajesh Kumar',
+    fileUrl: '/storage/rajesh_passport.pdf',
+    createdAt: '2024-12-05',
+    updatedAt: '2024-12-05'
   },
   {
     id: 'd7',
@@ -95,6 +119,10 @@ const mockDocuments: Document[] = [
     path: '/documents/finance/salary_jan25.pdf',
     tags: ['salary', 'finance', 'income'],
     sharedWith: [],
+    title: 'Car Insurance Policy',
+    fileUrl: '/storage/car_insurance.pdf',
+    createdAt: '2025-03-20',
+    updatedAt: '2025-03-20',
   },
   {
     id: 'd8',
@@ -106,6 +134,10 @@ const mockDocuments: Document[] = [
     path: '/documents/property/tax_2024.pdf',
     tags: ['tax', 'property', 'receipt'],
     sharedWith: [],
+    title: 'Car Insurance Policy',
+    fileUrl: '/storage/car_insurance.pdf',
+    createdAt: '2025-03-20',
+    updatedAt: '2025-03-20',
   },
 ];
 
@@ -147,7 +179,7 @@ const DocumentListScreen = () => {
   // Filter documents based on search query and selected category
   const filteredDocuments = documents.filter(doc => {
     const matchesSearch = doc.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          doc.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+                          doc.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) || false;
     
     const matchesCategory = selectedCategory === null || 
                            selectedCategory === 'All' || 
@@ -221,7 +253,7 @@ const DocumentListScreen = () => {
             <View className="flex-row items-center mt-1">
               <View className={`h-5 w-5 rounded-full ${categoryColors[item.category] || 'bg-gray-100'} items-center justify-center mr-1`}>
                 <Ionicons 
-                  name={categoryIcons[item.category] || 'document-outline'} 
+                  name={categoryIcons[item.category] as any || 'document-outline' as any} 
                   size={12} 
                   color="#6366f1" 
                 />
@@ -245,16 +277,16 @@ const DocumentListScreen = () => {
               )}
             </View>
             
-            {item.tags.length > 0 && (
+            {item.tags && item.tags.length > 0 && (
               <View className="flex-row flex-wrap mt-2">
-                {item.tags.slice(0, 3).map((tag, index) => (
+                {item.tags && item.tags.slice(0, 3).map((tag, index) => (
                   <View key={index} className="bg-gray-100 rounded-full px-2 py-1 mr-1">
                     <Text className="text-gray-600 text-xs">#{tag}</Text>
                   </View>
                 ))}
-                {item.tags.length > 3 && (
+                {item.tags && item.tags.length > 3 && (
                   <View className="bg-gray-100 rounded-full px-2 py-1">
-                    <Text className="text-gray-600 text-xs">+{item.tags.length - 3}</Text>
+                    <Text className="text-gray-600 text-xs">+{item.tags ? item.tags.length - 3 : 0}</Text>
                   </View>
                 )}
               </View>

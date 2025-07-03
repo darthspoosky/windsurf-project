@@ -30,6 +30,8 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '+91 9876543210',
     email: 'rajesh@example.com',
     role: 'admin',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: ['Peanuts', 'Dust'],
       conditions: ['Hypertension'],
@@ -38,8 +40,8 @@ const mockFamilyMembers: FamilyMember[] = [
       ],
     },
     documents: [
-      { id: 'd1', name: 'Aadhar Card', path: '/documents/rajesh/aadhar.pdf' },
-      { id: 'd2', name: 'PAN Card', path: '/documents/rajesh/pan.pdf' },
+      { id: 'd1', name: 'Aadhar Card', title: 'Aadhar Card', path: '/documents/rajesh/aadhar.pdf', fileUrl: '/documents/rajesh/aadhar.pdf', fileType: 'application/pdf', fileSize: 1024000, category: 'Identity', sharedWith: [], uploadDate: '2023-01-15', createdAt: '2023-01-15', updatedAt: '2023-01-15' },
+      { id: 'd2', name: 'PAN Card', title: 'PAN Card', path: '/documents/rajesh/pan.pdf', fileUrl: '/documents/rajesh/pan.pdf', fileType: 'application/pdf', fileSize: 512000, category: 'Identity', sharedWith: [], uploadDate: '2023-01-15', createdAt: '2023-01-15', updatedAt: '2023-01-15' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/men/1.jpg',
   },
@@ -52,14 +54,16 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '+91 9876543211',
     email: 'priya@example.com',
     role: 'admin',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: ['Seafood'],
       conditions: [],
       medications: [],
     },
     documents: [
-      { id: 'd3', name: 'Aadhar Card', path: '/documents/priya/aadhar.pdf' },
-      { id: 'd4', name: 'PAN Card', path: '/documents/priya/pan.pdf' },
+      { id: 'd3', name: 'Aadhar Card', title: 'Aadhar Card', path: '/documents/priya/aadhar.pdf', fileUrl: '/documents/priya/aadhar.pdf', fileType: 'application/pdf', fileSize: 1024000, category: 'Identity', sharedWith: [], uploadDate: '2023-02-20', createdAt: '2023-02-20', updatedAt: '2023-02-20' },
+      { id: 'd4', name: 'PAN Card', title: 'PAN Card', path: '/documents/priya/pan.pdf', fileUrl: '/documents/priya/pan.pdf', fileType: 'application/pdf', fileSize: 512000, category: 'Identity', sharedWith: [], uploadDate: '2023-02-20', createdAt: '2023-02-20', updatedAt: '2023-02-20' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/women/1.jpg',
   },
@@ -72,6 +76,8 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '',
     email: '',
     role: 'member',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: ['Milk'],
       conditions: ['Asthma'],
@@ -80,8 +86,8 @@ const mockFamilyMembers: FamilyMember[] = [
       ],
     },
     documents: [
-      { id: 'd5', name: 'Birth Certificate', path: '/documents/arjun/birth.pdf' },
-      { id: 'd6', name: 'School ID', path: '/documents/arjun/school.pdf' },
+      { id: 'd5', name: 'Birth Certificate', title: 'Birth Certificate', path: '/documents/arjun/birth.pdf', fileUrl: '/documents/arjun/birth.pdf', fileType: 'application/pdf', fileSize: 768000, category: 'Identity', sharedWith: [], uploadDate: '2023-03-10', createdAt: '2023-03-10', updatedAt: '2023-03-10' },
+      { id: 'd6', name: 'School ID', title: 'School ID', path: '/documents/arjun/school.pdf', fileUrl: '/documents/arjun/school.pdf', fileType: 'application/pdf', fileSize: 256000, category: 'Education', sharedWith: [], uploadDate: '2023-03-10', createdAt: '2023-03-10', updatedAt: '2023-03-10' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/lego/1.jpg',
   }
@@ -111,7 +117,8 @@ const FamilyMemberDetailsScreen = () => {
     }
   }, [memberId, navigation]);
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return 'Not provided';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-IN', { 
       day: 'numeric',
@@ -120,7 +127,8 @@ const FamilyMemberDetailsScreen = () => {
     });
   };
   
-  const getAge = (dateOfBirth: string): number => {
+  const getAge = (dateOfBirth?: string): number => {
+    if (!dateOfBirth) return 0;
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -238,7 +246,7 @@ const FamilyMemberDetailsScreen = () => {
             {member.phone && (
               <TouchableOpacity 
                 className="bg-white rounded-full p-3 mx-2"
-                onPress={() => handleCallMember(member.phone)}
+                onPress={() => member.phone && handleCallMember(member.phone)}
               >
                 <Ionicons name="call-outline" size={20} color="#6366f1" />
               </TouchableOpacity>
@@ -247,7 +255,7 @@ const FamilyMemberDetailsScreen = () => {
             {member.email && (
               <TouchableOpacity 
                 className="bg-white rounded-full p-3 mx-2"
-                onPress={() => handleEmailMember(member.email)}
+                onPress={() => member.email && handleEmailMember(member.email)}
               >
                 <Ionicons name="mail-outline" size={20} color="#6366f1" />
               </TouchableOpacity>
@@ -303,7 +311,7 @@ const FamilyMemberDetailsScreen = () => {
               <View className="mb-4">
                 <Text className="text-gray-500 text-sm">Date of Birth</Text>
                 <Text className="text-gray-800 text-lg">
-                  {formatDate(member.dateOfBirth)} ({getAge(member.dateOfBirth)} years)
+                  {formatDate(member.dateOfBirth)} {member.dateOfBirth ? `(${getAge(member.dateOfBirth)} years)` : ''}
                 </Text>
               </View>
               
@@ -339,9 +347,9 @@ const FamilyMemberDetailsScreen = () => {
               
               <Card className="mb-4">
                 <Text className="text-gray-800 font-bold mb-2">Allergies</Text>
-                {member.healthDetails.allergies.length > 0 ? (
+                {member.healthDetails && member.healthDetails.allergies && member.healthDetails.allergies.length > 0 ? (
                   <View className="flex-row flex-wrap">
-                    {member.healthDetails.allergies.map((allergy, index) => (
+                    {member.healthDetails?.allergies.map((allergy, index) => (
                       <View key={index} className="bg-red-100 rounded-full px-3 py-1 mr-2 mb-2">
                         <Text className="text-red-700">{allergy}</Text>
                       </View>
@@ -354,9 +362,9 @@ const FamilyMemberDetailsScreen = () => {
               
               <Card className="mb-4">
                 <Text className="text-gray-800 font-bold mb-2">Medical Conditions</Text>
-                {member.healthDetails.conditions.length > 0 ? (
+                {member.healthDetails && member.healthDetails.conditions && member.healthDetails.conditions.length > 0 ? (
                   <View className="flex-row flex-wrap">
-                    {member.healthDetails.conditions.map((condition, index) => (
+                    {member.healthDetails?.conditions.map((condition, index) => (
                       <View key={index} className="bg-blue-100 rounded-full px-3 py-1 mr-2 mb-2">
                         <Text className="text-blue-700">{condition}</Text>
                       </View>
@@ -369,8 +377,8 @@ const FamilyMemberDetailsScreen = () => {
               
               <Card>
                 <Text className="text-gray-800 font-bold mb-2">Medications</Text>
-                {member.healthDetails.medications.length > 0 ? (
-                  member.healthDetails.medications.map((med, index) => (
+                {member.healthDetails && member.healthDetails.medications && member.healthDetails.medications.length > 0 ? (
+                  member.healthDetails?.medications.map((med, index) => (
                     <View key={index} className="mb-3 last:mb-0">
                       <View className="flex-row justify-between">
                         <Text className="font-medium text-gray-800">{med.name}</Text>
@@ -416,7 +424,7 @@ const FamilyMemberDetailsScreen = () => {
                       
                       <View className="flex-1">
                         <Text className="font-medium text-gray-800">{doc.name}</Text>
-                        <Text className="text-gray-500 text-sm">{doc.path.split('/').pop()}</Text>
+                        <Text className="text-gray-500 text-sm">{doc.path ? doc.path.split('/').pop() : ''}</Text>
                       </View>
                       
                       <Ionicons name="chevron-forward" size={20} color="#6366f1" />

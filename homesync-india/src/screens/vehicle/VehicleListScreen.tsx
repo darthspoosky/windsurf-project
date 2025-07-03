@@ -8,7 +8,7 @@ import Card from '../../components/ui/Card';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { Vehicle } from '../../services/api/types';
 
-type VehicleListNavigationProp = StackNavigationProp<RootStackParamList, 'VehicleList'>;
+type VehicleListNavigationProp = StackNavigationProp<RootStackParamList, 'Vehicle'>;
 
 // Mock data for vehicles
 const mockVehicles: Vehicle[] = [
@@ -27,8 +27,34 @@ const mockVehicles: Vehicle[] = [
       { date: '2024-07-20', odometer: 2500, service: 'Oil Change', cost: 2000 },
     ],
     documents: [
-      { id: 'd1', name: 'Insurance Policy', path: '/documents/car1/insurance.pdf' },
-      { id: 'd2', name: 'RC Book', path: '/documents/car1/rc.pdf' },
+      { 
+        id: 'd1', 
+        title: 'Insurance Policy',
+        name: 'Insurance Policy', 
+        path: '/documents/car1/insurance.pdf',
+        fileUrl: '/documents/car1/insurance.pdf',
+        fileType: 'application/pdf',
+        fileSize: 2048,
+        category: 'insurance',
+        sharedWith: [],
+        uploadDate: '2024-11-10',
+        createdAt: '2024-11-10',
+        updatedAt: '2024-11-10'
+      },
+      { 
+        id: 'd2', 
+        title: 'RC Book',
+        name: 'RC Book', 
+        path: '/documents/car1/rc.pdf',
+        fileUrl: '/documents/car1/rc.pdf',
+        fileType: 'application/pdf',
+        fileSize: 1536,
+        category: 'registration',
+        sharedWith: [],
+        uploadDate: '2024-11-10',
+        createdAt: '2024-11-10',
+        updatedAt: '2024-11-10'
+      },
     ],
     createdAt: '2024-05-10',
     updatedAt: '2025-01-15',
@@ -47,8 +73,34 @@ const mockVehicles: Vehicle[] = [
       { date: '2025-06-10', odometer: 3000, service: 'Regular Service', cost: 6000 },
     ],
     documents: [
-      { id: 'd3', name: 'Insurance Policy', path: '/documents/car2/insurance.pdf' },
-      { id: 'd4', name: 'RC Book', path: '/documents/car2/rc.pdf' },
+      { 
+        id: 'd3', 
+        title: 'Insurance Policy',
+        name: 'Insurance Policy', 
+        path: '/documents/car2/insurance.pdf',
+        fileUrl: '/documents/car2/insurance.pdf',
+        fileType: 'application/pdf',
+        fileSize: 2048,
+        category: 'insurance',
+        sharedWith: [],
+        uploadDate: '2024-11-10',
+        createdAt: '2024-11-10',
+        updatedAt: '2024-11-10'
+      },
+      { 
+        id: 'd4', 
+        title: 'RC Book',
+        name: 'RC Book', 
+        path: '/documents/car2/rc.pdf',
+        fileUrl: '/documents/car2/rc.pdf',
+        fileType: 'application/pdf',
+        fileSize: 1536,
+        category: 'registration',
+        sharedWith: [],
+        uploadDate: '2024-11-10',
+        createdAt: '2024-11-10',
+        updatedAt: '2024-11-10'
+      },
     ],
     createdAt: '2024-08-15',
     updatedAt: '2025-06-10',
@@ -67,8 +119,34 @@ const mockVehicles: Vehicle[] = [
       { date: '2025-02-05', odometer: 1000, service: 'First Service', cost: 0 },
     ],
     documents: [
-      { id: 'd5', name: 'Insurance Policy', path: '/documents/bike1/insurance.pdf' },
-      { id: 'd6', name: 'RC Book', path: '/documents/bike1/rc.pdf' },
+      { 
+        id: 'd5', 
+        title: 'Insurance Policy',
+        name: 'Insurance Policy', 
+        path: '/documents/bike1/insurance.pdf',
+        fileUrl: '/documents/bike1/insurance.pdf',
+        fileType: 'application/pdf',
+        fileSize: 1024,
+        category: 'insurance',
+        sharedWith: [],
+        uploadDate: '2025-01-05',
+        createdAt: '2025-01-05',
+        updatedAt: '2025-01-05'
+      },
+      { 
+        id: 'd6', 
+        title: 'RC Book',
+        name: 'RC Book', 
+        path: '/documents/bike1/rc.pdf',
+        fileUrl: '/documents/bike1/rc.pdf',
+        fileType: 'application/pdf',
+        fileSize: 768,
+        category: 'registration',
+        sharedWith: [],
+        uploadDate: '2025-01-05',
+        createdAt: '2025-01-05',
+        updatedAt: '2025-01-05'
+      },
     ],
     createdAt: '2025-01-05',
     updatedAt: '2025-02-05',
@@ -96,7 +174,10 @@ const VehicleListScreen = () => {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
   
-  const getExpiryStatus = (dateString: string) => {
+  const getExpiryStatus = (dateString: string | undefined) => {
+    if (!dateString) {
+      return { text: 'Not Available', color: 'bg-gray-100 text-gray-800' };
+    }
     const daysUntil = getDaysUntil(dateString);
     
     if (daysUntil < 0) {
@@ -108,7 +189,10 @@ const VehicleListScreen = () => {
     }
   };
   
-  const getVehicleIcon = (type: string) => {
+  const getVehicleIcon = (type: string | undefined) => {
+    if (!type) {
+      return 'car-outline';
+    }
     switch (type.toLowerCase()) {
       case 'sedan':
       case 'hatchback':
@@ -124,6 +208,7 @@ const VehicleListScreen = () => {
   };
   
   const renderVehicleItem = ({ item }: { item: Vehicle }) => {
+    // Add null checks for potentially undefined values
     const insuranceStatus = getExpiryStatus(item.insuranceExpiryDate);
     const pollutionStatus = getExpiryStatus(item.pollutionExpiryDate);
     
@@ -162,7 +247,7 @@ const VehicleListScreen = () => {
             <View className="flex-row justify-between mb-2">
               <Text className="text-gray-600">Insurance</Text>
               <View className={`px-2 py-1 rounded-md ${insuranceStatus.color}`}>
-                <Text className={`text-xs font-medium ${insuranceStatus.color}`}>
+                <Text className="text-xs font-medium">
                   {insuranceStatus.text}
                 </Text>
               </View>
@@ -171,7 +256,7 @@ const VehicleListScreen = () => {
             <View className="flex-row justify-between">
               <Text className="text-gray-600">Pollution Check</Text>
               <View className={`px-2 py-1 rounded-md ${pollutionStatus.color}`}>
-                <Text className={`text-xs font-medium ${pollutionStatus.color}`}>
+                <Text className="text-xs font-medium">
                   {pollutionStatus.text}
                 </Text>
               </View>

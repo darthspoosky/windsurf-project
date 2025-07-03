@@ -7,9 +7,11 @@ import ScreenContainer from '../components/animations/ScreenContainer';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 
+type AdminScreenRoute = keyof RootStackParamList;
+
 type Screen = {
   name: string;
-  route: string;
+  route: AdminScreenRoute;
   icon: string;
 };
 
@@ -76,15 +78,18 @@ const AdminScreen: React.FC = () => {
     },
   ];
 
-  const navigateTo = (routeName: string) => {
-    navigation.navigate(routeName);
+  // Type-safe navigation helper
+  const navigateTo = (routeName: keyof RootStackParamList, params?: any) => {
+    // Use type assertion to work around React Navigation's complex typings
+    // This is safe because we're ensuring routeName is a valid key of RootStackParamList
+    navigation.navigate(routeName as any, params);
   };
 
   // Define screen preview type
   type ScreenPreview = {
     title: string;
     icon: string;
-    route: string; // This will be refined with keyof RootStackParamList when used
+    route: AdminScreenRoute;
     description: string;
   };
 
@@ -112,9 +117,9 @@ const AdminScreen: React.FC = () => {
 
   // Filter to only available screens
   const availableRoutes = getAvailableScreens();
-  const screenPreviews: ScreenPreview[] = allScreenPreviews.filter(screen => 
-    availableRoutes.includes(screen.route)
-  );
+  const screenPreviews: ScreenPreview[] = allScreenPreviews.filter((screen) => 
+    availableRoutes.includes(screen.route as keyof RootStackParamList)
+  ) as Array<ScreenPreview & { route: keyof RootStackParamList }>;
 
   // No carousel render item needed with simple ScrollView
 
@@ -168,7 +173,7 @@ const AdminScreen: React.FC = () => {
                 <TouchableOpacity
                   key={screenIndex}
                   style={styles.moduleCard}
-                  onPress={() => navigateTo(screen.route)}
+                  onPress={() => navigateTo(screen.route, undefined)}
                 >
                   <Card style={styles.moduleCardInner}>
                     <Card.Content style={styles.moduleCardContent}>
@@ -256,11 +261,7 @@ const AdminScreen: React.FC = () => {
                     <Button
                       mode="contained"
                       style={styles.carouselButton}
-                      onPress={() => {
-                        // Type-safe navigation using type assertion
-                        // This is safe because we've already filtered to ensure routes exist
-                        navigation.navigate(item.route as keyof RootStackParamList);
-                      }}
+                      onPress={() => navigateTo(item.route, undefined)}
                     >
                       Open Screen
                     </Button>

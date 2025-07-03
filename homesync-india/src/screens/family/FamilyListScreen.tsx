@@ -28,6 +28,8 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '+91 9876543210',
     email: 'rajesh@example.com',
     role: 'admin',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: ['Peanuts', 'Dust'],
       conditions: ['Hypertension'],
@@ -36,8 +38,8 @@ const mockFamilyMembers: FamilyMember[] = [
       ],
     },
     documents: [
-      { id: 'd1', name: 'Aadhar Card', path: '/documents/rajesh/aadhar.pdf' },
-      { id: 'd2', name: 'PAN Card', path: '/documents/rajesh/pan.pdf' },
+      { id: 'd1', name: 'Aadhar Card', title: 'Aadhar Card', path: '/documents/rajesh/aadhar.pdf', fileUrl: '/documents/rajesh/aadhar.pdf', fileType: 'application/pdf', fileSize: 1024000, category: 'Identity', sharedWith: [], uploadDate: '2023-01-15', createdAt: '2023-01-15', updatedAt: '2023-01-15' },
+      { id: 'd2', name: 'PAN Card', title: 'PAN Card', path: '/documents/rajesh/pan.pdf', fileUrl: '/documents/rajesh/pan.pdf', fileType: 'application/pdf', fileSize: 512000, category: 'Identity', sharedWith: [], uploadDate: '2023-01-15', createdAt: '2023-01-15', updatedAt: '2023-01-15' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/men/1.jpg',
   },
@@ -50,14 +52,16 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '+91 9876543211',
     email: 'priya@example.com',
     role: 'admin',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: ['Seafood'],
       conditions: [],
       medications: [],
     },
     documents: [
-      { id: 'd3', name: 'Aadhar Card', path: '/documents/priya/aadhar.pdf' },
-      { id: 'd4', name: 'PAN Card', path: '/documents/priya/pan.pdf' },
+      { id: 'd3', name: 'Aadhar Card', title: 'Aadhar Card', path: '/documents/priya/aadhar.pdf', fileUrl: '/documents/priya/aadhar.pdf', fileType: 'application/pdf', fileSize: 1024000, category: 'Identity', sharedWith: [], uploadDate: '2023-02-20', createdAt: '2023-02-20', updatedAt: '2023-02-20' },
+      { id: 'd4', name: 'PAN Card', title: 'PAN Card', path: '/documents/priya/pan.pdf', fileUrl: '/documents/priya/pan.pdf', fileType: 'application/pdf', fileSize: 512000, category: 'Identity', sharedWith: [], uploadDate: '2023-02-20', createdAt: '2023-02-20', updatedAt: '2023-02-20' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/women/1.jpg',
   },
@@ -70,6 +74,8 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '',
     email: '',
     role: 'member',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: ['Milk'],
       conditions: ['Asthma'],
@@ -78,8 +84,8 @@ const mockFamilyMembers: FamilyMember[] = [
       ],
     },
     documents: [
-      { id: 'd5', name: 'Birth Certificate', path: '/documents/arjun/birth.pdf' },
-      { id: 'd6', name: 'School ID', path: '/documents/arjun/school.pdf' },
+      { id: 'd5', name: 'Birth Certificate', title: 'Birth Certificate', path: '/documents/arjun/birth.pdf', fileUrl: '/documents/arjun/birth.pdf', fileType: 'application/pdf', fileSize: 768000, category: 'Identity', sharedWith: [], uploadDate: '2023-03-10', createdAt: '2023-03-10', updatedAt: '2023-03-10' },
+      { id: 'd6', name: 'School ID', title: 'School ID', path: '/documents/arjun/school.pdf', fileUrl: '/documents/arjun/school.pdf', fileType: 'application/pdf', fileSize: 256000, category: 'Education', sharedWith: [], uploadDate: '2023-03-10', createdAt: '2023-03-10', updatedAt: '2023-03-10' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/lego/1.jpg',
   },
@@ -92,14 +98,16 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '',
     email: '',
     role: 'member',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: [],
       conditions: [],
       medications: [],
     },
     documents: [
-      { id: 'd7', name: 'Birth Certificate', path: '/documents/sneha/birth.pdf' },
-      { id: 'd8', name: 'School ID', path: '/documents/sneha/school.pdf' },
+      { id: 'd7', name: 'Birth Certificate', title: 'Birth Certificate', path: '/documents/sneha/birth.pdf', fileUrl: '/documents/sneha/birth.pdf', fileType: 'application/pdf', fileSize: 768000, category: 'Identity', sharedWith: [], uploadDate: '2023-04-05', createdAt: '2023-04-05', updatedAt: '2023-04-05' },
+      { id: 'd8', name: 'School ID', title: 'School ID', path: '/documents/sneha/school.pdf', fileUrl: '/documents/sneha/school.pdf', fileType: 'application/pdf', fileSize: 256000, category: 'Education', sharedWith: [], uploadDate: '2023-04-05', createdAt: '2023-04-05', updatedAt: '2023-04-05' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/lego/2.jpg',
   },
@@ -112,6 +120,8 @@ const mockFamilyMembers: FamilyMember[] = [
     phone: '+91 9876543212',
     email: 'ramesh@example.com',
     role: 'member',
+    createdAt: '2023-01-01',
+    updatedAt: '2023-06-15',
     healthDetails: {
       allergies: [],
       conditions: ['Diabetes', 'Heart Disease'],
@@ -121,8 +131,8 @@ const mockFamilyMembers: FamilyMember[] = [
       ],
     },
     documents: [
-      { id: 'd9', name: 'Aadhar Card', path: '/documents/ramesh/aadhar.pdf' },
-      { id: 'd10', name: 'Medical Insurance', path: '/documents/ramesh/insurance.pdf' },
+      { id: 'd9', name: 'Aadhar Card', title: 'Aadhar Card', path: '/documents/ramesh/aadhar.pdf', fileUrl: '/documents/ramesh/aadhar.pdf', fileType: 'application/pdf', fileSize: 1024000, category: 'Identity', sharedWith: [], uploadDate: '2023-05-12', createdAt: '2023-05-12', updatedAt: '2023-05-12' },
+      { id: 'd10', name: 'Medical Insurance', title: 'Medical Insurance', path: '/documents/ramesh/insurance.pdf', fileUrl: '/documents/ramesh/insurance.pdf', fileType: 'application/pdf', fileSize: 2048000, category: 'Insurance', sharedWith: [], uploadDate: '2023-05-12', createdAt: '2023-05-12', updatedAt: '2023-05-12' },
     ],
     profilePic: 'https://randomuser.me/api/portraits/men/70.jpg',
   },
@@ -132,7 +142,8 @@ const FamilyListScreen = () => {
   const navigation = useNavigation<FamilyListNavigationProp>();
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>(mockFamilyMembers);
   
-  const getAge = (dateOfBirth: string): number => {
+  const getAge = (dateOfBirth?: string): number => {
+    if (!dateOfBirth) return 0;
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -199,7 +210,7 @@ const FamilyListScreen = () => {
               
               {item.phone && (
                 <TouchableOpacity 
-                  onPress={() => handleCallMember(item.phone)}
+                  onPress={() => item.phone && handleCallMember(item.phone)}
                   className="h-10 w-10 rounded-full bg-green-100 items-center justify-center"
                 >
                   <Ionicons name="call-outline" size={20} color="#16a34a" />
@@ -218,10 +229,10 @@ const FamilyListScreen = () => {
                 </View>
               )}
               
-              {item.healthDetails.conditions.length > 0 && (
+              {item.healthDetails && item.healthDetails.conditions && item.healthDetails.conditions.length > 0 && (
                 <View className="bg-blue-100 rounded-full px-3 py-1">
                   <Text className="text-xs text-blue-700">
-                    {item.healthDetails.conditions.length} Medical {item.healthDetails.conditions.length === 1 ? 'Condition' : 'Conditions'}
+                    {item.healthDetails && item.healthDetails.conditions ? item.healthDetails.conditions.length : 0} Medical {item.healthDetails && item.healthDetails.conditions && item.healthDetails.conditions.length === 1 ? 'Condition' : 'Conditions'}
                   </Text>
                 </View>
               )}

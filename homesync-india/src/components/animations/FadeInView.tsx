@@ -4,17 +4,14 @@ import Animated, {
   withTiming,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { ViewStyle } from "react-native";
 
 interface FadeInViewProps {
   duration?: number;
-  style?: ViewStyle;
   children: React.ReactNode;
 }
 
 const FadeInView: React.FC<FadeInViewProps> = ({
   duration = 500,
-  style,
   children,
 }) => {
   const opacity = useSharedValue(0);
@@ -25,10 +22,11 @@ const FadeInView: React.FC<FadeInViewProps> = ({
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
+    flex: 1,
   }));
 
   return (
-    <Animated.View style={[style, animatedStyle]}>{children}</Animated.View>
+    <Animated.View style={animatedStyle}>{children}</Animated.View>
   );
 };
 

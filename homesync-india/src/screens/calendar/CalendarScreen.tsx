@@ -197,7 +197,7 @@ const CalendarScreen = () => {
             <Button 
               variant="primary" 
               size="sm" 
-              onPress={() => navigation.navigate('AddEvent')}
+              onPress={() => navigation.navigate('AddEvent', { date: selectedDate })}
             >
               <View className="flex-row items-center">
                 <Ionicons name="add" size={18} color="#fff" />

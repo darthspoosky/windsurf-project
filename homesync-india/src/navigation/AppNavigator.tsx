@@ -52,7 +52,7 @@ export type RootStackParamList = {
   // Calendar
   Calendar: undefined;
   EventDetail: { eventId: string };
-  AddEvent: undefined;
+  AddEvent: { date?: string };
   EditEvent: { eventId: string };
   
   // Vehicle Management

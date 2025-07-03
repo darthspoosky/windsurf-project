@@ -290,7 +290,7 @@ const HealthDashboardScreen = () => {
               <Text className="text-xl font-bold text-gray-800">Upcoming Appointments</Text>
               <TouchableOpacity 
                 className="flex-row items-center" 
-                onPress={() => navigation.navigate('AddEvent')}
+                onPress={() => navigation.navigate('AddEvent', { date: new Date().toISOString().split('T')[0] })}
               >
                 <Ionicons name="add-circle-outline" size={18} color="#6366f1" />
                 <Text className="ml-1 text-primary font-medium">Schedule</Text>

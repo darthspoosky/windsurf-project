@@ -8,6 +8,7 @@ import {
   Dimensions
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Ionicons as IoniconsType } from '@expo/vector-icons';
 import Card from '../../components/ui/Card';
 import { FinanceSummary } from './components/FinanceSummary';
 import { UtilityUsage } from './components/UtilityUsage';
@@ -177,7 +178,7 @@ interface SummaryCardProps {
   value: string;
   change: string;
   isPositive: boolean;
-  icon: string;
+  icon: keyof typeof Ionicons.glyphMap;
   color: string;
 }
 

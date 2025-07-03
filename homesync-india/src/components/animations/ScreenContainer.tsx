@@ -5,7 +5,7 @@ import FadeInView from "./FadeInView";
 
 interface ScreenContainerProps {
   duration?: number;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
   children: React.ReactNode;
 }
 
@@ -15,8 +15,8 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({
   children,
 }) => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <FadeInView duration={duration} style={[{ flex: 1 }, style]}>
+    <SafeAreaView style={style}>
+      <FadeInView duration={duration}>
         {children}
       </FadeInView>
     </SafeAreaView>

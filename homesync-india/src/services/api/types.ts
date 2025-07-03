@@ -117,6 +117,7 @@ export interface GroceryItem {
   isCompleted: boolean;
   notes?: string;
   createdAt: string; // Adding createdAt property used in GroceryItemDetailScreen
+  updatedAt: string; // Adding updatedAt property used in GroceryListScreen
 }
 
 export interface GroceryList {
